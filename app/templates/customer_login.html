@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% from 'bootstrap5/form.html' import render_form, render_field %}
+
+{% block app_content %}
+
+<div class="container">
+    <div class="row">
+    <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h1 class="text-center">Customer Login</h1>
+        
+    
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+    
+            <div class="col-md-3"></div>
+                <p>
+                    {{ render_field(form.email,size=64) }}<br>
+                    {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ render_field(form.password,size=32) }}<br>
+                    {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+
+                <p>{{ render_field(form.submit) }}</p>
+
+              
+                <p class="mb-0">Don't have an account? <a href="{{ url_for('customer_register') }}" class="text-dark-50 fw-bold">Sign Up</a>
+                </p>
+              </div>
+  
+            <div class="col-md-3"></div>
+
+    
+    </form>
+</div>
+</div>
+
+{% endblock %}

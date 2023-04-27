@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% from 'bootstrap5/form.html' import render_form, render_field %}
+
+{% block app_content %}
+
+   
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        
+    <section class="background-radial-gradient overflow-hidden">
+    
+  
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <div class="mb-md-5 mt-md-4 pb-5">
+      
+                    <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
+                    <p class="text-white-50 mb-5">Please fill in the blank spaces!</p>
+      
+                    <div class="form-outline form-white mb-4">
+                        <p>
+                            {{ render_field(form.username,size=32) }}<br>
+                
+                            {% for error in form.username.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                   
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                        <p>
+                            {{ render_field(form.email,size=64) }}<br>
+                            {% for error in form.email.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                        <p>
+                            {{ render_field(form.password,size=32) }}<br>
+                            {% for error in form.password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                        <p>
+                            {{ render_field(form.password2,size=32) }}<br>
+                            {% for error in form.password2.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                      <select name="user_type">
+                        <option value="User">User</option>
+                        <option value="Admin">Admin</option>
+                      </select>
+                    </div>
+                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
+      
+      
+                  </div>
+      
+                  <div>
+                    <p class="mb-0">Do you have an account? <a href="{{ url_for('login') }}" class="text-white-50 fw-bold">Sign In</a>
+                    </p>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block app_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+        Invoice: {{orders.invoice}}
+        <br>
+        Status: {{orders.status}}
+        <br>
+        Customer name: {{customer.name}}
+        <br>
+        Customer email: {{customer.email}}
+        
+        <table class="table tabble-sm">
+            <thead>
+                <th>n</th>
+                
+                <th>Name</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Delete_Order</th>
+               
+                
+            </thead>
+            <tbody>
+                {% for key , product in orders.orders.items() %}
+                {% set discount = "%0.2f" |format((product.discount/100) * product.price|float) %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    {% if product.discount %}
+                    <td>{{product.discount}}% &nbsp; is {{discount}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    <td>{{product.quantity}}</td>
+                    {% set subtotal = product.quantity|int * product.price|float %}
+                    <td>{{"%0.2f"|format((subtotal|float) - discount|float)}}</td>
+                    <td><a href="{{url_for('delete_orders', id=orders.id)}}">delete order</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+                <table class="table table-sm"> 
+                <tr>
+                    <td>
+                        <form action="{{url_for('get_pdf', invoice=orders.invoice)}}" method="post">
+                            <button type="submit" class="btn btn-dark">Download Order</button>
+                        </form>
+                    </td>
+
+                    <td width="35%"></td>
+                    <td colspan="4"><h4>Grand Total; {{grandTotal}}</h4></td>
+                    <td><a href="{{url_for('clear_cart')}}" class="btn btn-sm btn-danger float-right mr-4">Cancel all Orders</a></td>
+                </tr>
+            
+        </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+

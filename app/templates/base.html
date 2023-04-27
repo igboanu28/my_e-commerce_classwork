@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/brands.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/solid.min.css" />
+    {% block styles %}
+        <!-- Bootstrap CSS -->
+        {{ bootstrap.load_css() }}
+        {% endblock %}
+    <title>Portfolio</title>
+    {% endblock %}
+</head>
+<body>
+    {% block navbar %}
+    {% from 'bootstrap5/nav.html' import render_nav_item %}
+
+    <nav class="navbar navbar-expand-lg bg-dark ">
+      <div class="container-fluid">
+        <a class="navbar-brand text-white" href="{{ url_for('home') }}">E-commerce</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+            <li class="nav-item ">
+              <a class="nav-link active text-white" aria-current="page" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Category</a>
+              <ul class="dropdown-menu">
+               
+                {%for categories in category %}
+                <li><a class="dropdown-item" href="{{url_for('get_category', id=categories.id)}}">{{categories.name}}</a></li>
+              
+                {%endfor%}
+              </ul>
+            </li>
+          
+            {% if current_user.is_anonymous %}
+          
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{ url_for('login') }}">Login</a>
+            </li>
+            
+        
+            {% else %}
+            {%if current_user.user_type == 'Admin'%}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{ url_for('admin_dashboard', username=current_user.username) }}">Profile</a>
+            </li>
+            {%else%}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{ url_for('user_dashboard', username=current_user.username) }}">Profile</a>
+            </li>
+            {%endif%}
+            <li class="nav-item">
+          
+              <a class="nav-link text-white" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+            
+
+            {% endif %}
+          </ul>
+          <form class="d-flex" role="search" action="{{url_for('search_result')}}">
+            <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search" name="q">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+      
+            <li class="nav-link px-2">
+              <i class="fa-solid fa-shopping-cart fa-beat" style="color: #ffffff;"></i>
+              <p><a href="{{ url_for('view_carts')}}" class="text-white">Cart ({{session['Shopcart']|length}})</a></p>
+
+            </li>
+        </div>
+      </div>
+    </nav>
+
+    {% endblock %}
+    {% block content %}
+    <div >
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+    </div>
+    {% endblock %}
+
+    {% block scripts %}
+    <!-- Optional JavaScript -->
+    
+    {{ bootstrap.load_js() }}
+{% endblock %}

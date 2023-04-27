@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h1 class="text-cenetr mt-5">Edit a category</h1>
+            <form action="" method="POST">
+                <input type= 'text' name="category" class="form-control" value="{{edit.name}}">
+                <input type="submit" value="Edit category" class="btn btn-info mt-2">
+            </form>
+            <a href="{{url_for('view_category')}}" class="btn btn-warning" style="margin-top: -65px; margin-left: 140px; ">Cancle</a>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+{% endblock %}

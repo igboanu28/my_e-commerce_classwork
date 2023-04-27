@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% from 'bootstrap5/form.html' import render_form, render_field %}
+
+{% block app_content %}
+
+<div class="container">
+    <div class="row">
+    <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h1 class="text-center">Customer Registeration</h1>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <p>
+                    {{ render_field(form.name,size=32) }}<br>
+        
+                    {% for error in form.name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+             
+                <p>
+                    {{ render_field(form.email,size=64) }}<br>
+                    {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ render_field(form.password,size=32) }}<br>
+                    {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ render_field(form.password2,size=32) }}<br>
+                    {% for error in form.password2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+
+              <div>
+                <p class="mb-0">Don't have an account? <a href="{{ url_for('register') }}" class="text-white-50 fw-bold">Sign Up</a>
+                </p>
+              </div>
+  
+                <p>{{ render_field(form.submit) }}</p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    {{ render_field(form.country,size=32) }}<br>
+                    {% for error in form.country.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ render_field(form.city,size=32) }}<br>
+                    {% for error in form.city.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ render_field(form.contact,size=32) }}<br>
+                    {% for error in form.contact.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ render_field(form.address,size=32) }}<br>
+                    {% for error in form.address.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                
+            </div>
+            <div class="col-md-2"></div>
+
+        </div>
+    </form>
+</div>
+
+{% endblock %}

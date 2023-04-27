@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form, render_field %}
+
+{% block app_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+<h1 class="text-center">Add Products</h1>
+</div>
+<div class="col-md-2"></div>
+</div>
+
+<form action="/add_product" method="post"
+enctype = "multipart/form-data">
+    {{ form.hidden_tag() }}
+    
+    <div class="form-group">
+    <select name="category" id="category" class="form-control" required>
+        <option>select a category</option>
+        {% for category in categories %}
+        <option value="{{category.id}}">{{category.name}}</option>
+        {%endfor%}
+    </select>
+    <p>
+        {{ render_field(form.name,size=200) }}<br>
+        {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ render_field(form.description,cols=50,rows=4) }}<br>
+        {% for error in form.description.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ render_field(form.price) }}<br>
+        {% for error in form.price.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ render_field(form.discount) }}<br>
+        {% for error in form.discount.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+
+
+    <input class="form-control" type = "file" name="file" />
+<br>
+
+    <p>{{ render_field(form.submit) }}</p>
+</div>
+</form>
+</div>
+</div>
+{% endblock %}

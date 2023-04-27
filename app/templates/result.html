@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block app_content %}
+
+
+
+<section style="background-color: #eee;">
+    <div class="text-center container py-5">
+      <h4 class="mt-4 mb-5"><strong>Bestsellers</strong></h4>
+  
+      <div class="row">
+        {% for product in products %}
+        <div class="col-lg-4 col-md-12 mb-4">
+          <div class="card">
+            <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+              data-mdb-ripple-color="light">
+              <img src="/uploads/{{product.image_file}}" class="card-img-top" height="200" />
+              <a href="#!">
+                <div class="mask"> 
+                  <div class="d-flex justify-content-start align-items-end h-100">
+                    {% if product.discount %}
+                    <h5><span class="badge bg-primary ms-2 ">discount: {{product.discount}}</span></h5>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="hover-overlay">
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </div>
+              </a>
+            </div>
+            <div class="card-body">
+              <a href="" class="text-reset">
+                <h5 class="card-title mb-3">{{product.name}}</h5>
+              </a>
+              <a href="" class="text-reset">
+                <p>Category</p>
+              </a>
+              <h6 class="mb-3">${{-product.price}}</h6>
+              
+            <div class="card-footer">
+                <a href="{{url_for('product_details', id=product.id)}}" class="float-start btn btn-sm btn-primary">details</a>
+                <form action="{{url_for('add_cart')}}" method="POST">
+                  <input type="hidden" name="product_id" value="{{product.id}}">
+                  <button type="submit" class="btn btn-sm btn-primary float-end">Add cart</button>
+                  
+                  <input type="hidden" name="quantity" id="" value="1" min="1">
+
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+
+       {% endfor %}
+  
+      
+            </div>
+          </div>
+      
+  </section>
+{% endblock %}
