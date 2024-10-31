@@ -15,6 +15,10 @@ def category():
     category = Category.query.join(Products, (Category.id == Products.category_id)).all()
     return category
 
+port_number = 7000
+
+if __name__ == '__main__':
+    app.run(debug=True, host='localhost', port=port_number)
 
 @app.get('/')
 def home():
